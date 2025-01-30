@@ -1,0 +1,131 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-image: url('/images/background.jpg');
+    background-size: cover;
+}
+
+.title {
+    margin-top: 5%;
+    color: #080808;
+    text-align: center; 
+    font-size: 2rem;
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+}
+
+.container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 25%;
+}
+
+.picked-cards-area {
+    background-color: #0d9461;
+    padding: 20px;
+    width: 400px;
+    border: 5px solid #c1ba23;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.input-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.label-cell {
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    font-size: 1rem;
+    padding-bottom: 10px;
+}
+
+.input-cell {
+    text-align: center;
+}
+
+.input-table input {
+    width: 150px;
+    padding: 8px;
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.vs {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.btn {
+    position: relative;
+    width: 250px;
+    height: 70px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    background-color: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(10px);
+    box-shadow: 2px 2px 20px 0px rgba(0, 0, 0, .1);
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: .1s ease;
+    margin-top: 20px;
+    cursor:pointer;
+}
+
+.container-message {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    color: #333;
+}
+
+.container-message h2 {
+    margin-bottom: 10px;
+}
+
+.container-message p {
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.container-message.win p {
+    background-color: #d4edda; /* Green for Player 1 win */
+    color: #155724; /* Dark green text */
+}
+
+.container-message.lose p {
+    background-color: #f8d7da; /* Red for Player 2 win */
+    color: #721c24; /* Dark red text */
+}
+
+.container-message.tie p {
+    background-color: #fff3cd; /* Yellow for Tie */
+    color: #856404; /* Dark yellow text */
+}
+

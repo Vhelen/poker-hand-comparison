@@ -89,6 +89,8 @@ Cette liste est ensuite passée à compare_highest() pour déterminer la main ga
 ```
 cd docker
 
+cp poker_hand/.env_example poker_hand/.env
+
 docker compose build
 docker compose up -d
 

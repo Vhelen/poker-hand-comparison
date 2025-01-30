@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Poker Hand Comparison{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="title">Poker Hand Comparison</h1>
+
+    {{ form_start(form, {'attr': {'id': 'poker-form'}}) }}
+        <div class="picked-cards-area">
+            <table class="input-table">
+                <tr>
+                    <td class="label-cell">{{ form_label(form.hand_player_1) }}</td>
+                    <td></td>
+                    <td class="label-cell">{{ form_label(form.hand_player_2) }}</td>
+                </tr>
+                <tr>
+                    <td class="input-cell">{{ form_widget(form.hand_player_1) }}</td>
+                    <td class="vs">VS</td>
+                    <td class="input-cell">{{ form_widget(form.hand_player_2) }}</td>
+                </tr>
+            </table>
+        </div>
+        <button type="submit" class="btn">Compare</button>
+    {{ form_end(form) }}
+
+    <div id="error-messages" hidden class="container-message lose"></div>
+    <div id="result-container" hidden class="container-message"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('poker-form');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+
+            fetch('{{ path('poker_hand') }}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const result_container = document.getElementById('result-container');
+                
+                // reset state
+                result_container.classList.remove('win', 'lose', 'tie');
+                result_container.hidden = true;
+                document.getElementById('error-messages').hidden = true;
+
+                if (data.success) {
+                    result_container.hidden = false;
+
+                    if (data.result === 1) {
+                        result_container.innerHTML = '<h2>Result:</h2><p>Player 1 Wins!</p>';
+                        result_container.classList.add('win');
+                    } else if (data.result === 2) {
+                        result_container.innerHTML = '<h2>Result:</h2><p>Player 2 Wins!</p>';
+                        result_container.classList.add('lose');
+
+                    } else if (data.result === 3) {
+                        result_container.innerHTML = '<h2>Result:</h2><p>It\'s a Tie!</p>';
+                        result_container.classList.add('tie');
+                    }
+                }
+                else
+                {
+                    display_errors(data.errors);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        function display_errors(errors) {
+            const error_messages_container = document.getElementById('error-messages');
+            error_messages_container.innerHTML = '<h2>Errors:</h2>';
+
+            errors.forEach(function (error) {
+                const error_message = document.createElement('p');
+                error_message.innerText = error;
+
+                error_messages_container.appendChild(error_message);
+            });
+
+            error_messages_container.hidden = false;
+            
+        }
+    });
+</script>
+
+{% endblock %}
