@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: poker_app_nginx
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./poker_hand:/var/www
+      - ./web/conf/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    networks:
+      - symfony_network
+
+  php:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: poker_app_php
+    restart: always
+    volumes:
+      - ./poker_hand:/var/www
+    networks:
+      - symfony_network
+
+networks:
+  symfony_network:
+    driver: bridge
